@@ -1,39 +1,25 @@
-import React from 'react';
+//import './Editor.css';
+import { getValue } from "@testing-library/user-event/dist/utils";
+import React from "react";
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import Editor from './Editor';
-import Previewer from './Previewer';
-import reportWebVitals from './reportWebVitals';
-import bootstrap from 'bootstrap'
-
-
-class App extends React.Component{
-  constructor(props){
-    super(props);
-    this.state={
-      value:exampleText
-    };
-  }
-  callbackFromEditor(i){
-    this.setState({value:i});
-  }
-  render(){
-    return(
-      <div className='row'>
-        <Editor funcCallback={(i)=>this.callbackFromEditor(i)}/>
-        <Previewer text={this.state.value}/>
-      </div> 
-    );
-  }
+class Editor extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            inputField:exampleText
+        };
+        this.handleChange = this.handleChange.bind(this);
+    }
+    handleChange(event){
+        this.setState({inputField: event.target.value});
+        this.props.funcCallback(event.target.value);
+    }
+    render(){
+        return (
+            <textarea id="editor" value={this.state.inputField} onChange={this.handleChange}></textarea>
+        );
+    }
 }
-
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
 const exampleText= `# Welcome to my React Markdown Previewer!
 
 ## This is a sub-heading...
@@ -78,7 +64,4 @@ And here. | Okay. | I think we get it.
 
 ![freeCodeCamp Logo](https://cdn.freecodecamp.org/testable-projects-fcc/images/fcc_secondary.svg)
 `;
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+export default Editor;
