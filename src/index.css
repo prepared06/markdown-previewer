@@ -19,7 +19,7 @@ code {
   resize: none;
 }
 #preview{
-  
+  overflow:scroll;
   width: 50vw;
   height: 100vh;
 }
